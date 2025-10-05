@@ -24,6 +24,10 @@ pygame.display.set_caption("Snake")
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()
 running = True
+score = 0
+
+font = pygame.font.Font(None, 74)
+text = font.render(f"Score: {score}", True, (255, 255, 255))
 
 while running:
     for event in pygame.event.get():
@@ -64,6 +68,8 @@ while running:
     if snake_pixel_locations[-1] != fruit_pixel_location:
         snake_pixel_locations.pop(0)
     else:
+        score += 1
+        text = font.render(f"Score: {score}", True, (255, 255, 255))
         fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
                                 random.randrange(0, NUM_HEIGHT_BLOCKS))
 
@@ -72,12 +78,16 @@ while running:
         snake_direction = RIGHT
         fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
                                 random.randrange(0, NUM_HEIGHT_BLOCKS))
+        score = 0
+        text = font.render(f"Score: {score}", True, (255, 255, 255))
 
     pygame.draw.rect(
         screen, "red", (*fruit_pixel_location, BLOCK_SIZE, BLOCK_SIZE))
 
     for x, y in snake_pixel_locations:
         pygame.draw.rect(screen, "white", (x, y, BLOCK_SIZE, BLOCK_SIZE))
+
+    screen.blit(text, (0, 0))
 
     pygame.display.flip()
 
