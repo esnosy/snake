@@ -81,6 +81,15 @@ while running:
         score = 0
         text = font.render(f"Score: {score}", True, (255, 255, 255))
 
+    for loc in snake_pixel_locations[:-2]:
+        if loc == snake_pixel_locations[-1]:
+            snake_pixel_locations = [(0, 0)]
+            snake_direction = RIGHT
+            fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
+                                    random.randrange(0, NUM_HEIGHT_BLOCKS))
+            score = 0
+            text = font.render(f"Score: {score}", True, (255, 255, 255))
+
     pygame.draw.rect(
         screen, "red", (*fruit_pixel_location, BLOCK_SIZE, BLOCK_SIZE))
 
