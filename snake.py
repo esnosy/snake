@@ -59,10 +59,15 @@ while running:
 
     if snake_pixel_locations[-1] != fruit_pixel_location:
         snake_pixel_locations.pop(0)
+    else:
+        fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
+                                random.randrange(0, NUM_HEIGHT_BLOCKS))
 
     if snake_pixel_locations[-1][0] < 0 or snake_pixel_locations[-1][1] < 0 or snake_pixel_locations[-1][0] >= WINDOW_WIDTH or snake_pixel_locations[-1][1] >= WINDOW_HEIGHT:
         snake_pixel_locations = [(0, 0)]
         snake_direction = RIGHT
+        fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
+                                random.randrange(0, NUM_HEIGHT_BLOCKS))
 
     pygame.draw.rect(
         screen, "red", (*fruit_pixel_location, BLOCK_SIZE, BLOCK_SIZE))
