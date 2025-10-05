@@ -13,23 +13,37 @@ NUM_HEIGHT_BLOCKS = 20
 WINDOW_WIDTH = BLOCK_SIZE * NUM_WIDTH_BLOCKS
 WINDOW_HEIGHT = BLOCK_SIZE * NUM_HEIGHT_BLOCKS
 
-snake_direction = RIGHT
-snake_pixel_locations = [(0, 0)]
-
-fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
-                        random.randrange(0, NUM_HEIGHT_BLOCKS))
 
 pygame.init()
 pygame.display.set_caption("Snake")
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()
 running = True
-score = 0
-
 font = pygame.font.Font(None, 74)
+
+snake_direction = RIGHT
+snake_pixel_locations = [(0, 0)]
+fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
+                        random.randrange(0, NUM_HEIGHT_BLOCKS))
+score = 0
 text = font.render(f"Score: {score}", True, (255, 255, 255))
 
+INIT = 0
+RUNNING = 1
+
+state = INIT
+
+
 while running:
+    if state == INIT:
+        snake_direction = RIGHT
+        snake_pixel_locations = [(0, 0)]
+        fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
+                                random.randrange(0, NUM_HEIGHT_BLOCKS))
+        score = 0
+        text = font.render(f"Score: {score}", True, (255, 255, 255))
+        state = RUNNING
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -74,21 +88,12 @@ while running:
                                 random.randrange(0, NUM_HEIGHT_BLOCKS))
 
     if snake_pixel_locations[-1][0] < 0 or snake_pixel_locations[-1][1] < 0 or snake_pixel_locations[-1][0] >= WINDOW_WIDTH or snake_pixel_locations[-1][1] >= WINDOW_HEIGHT:
-        snake_pixel_locations = [(0, 0)]
-        snake_direction = RIGHT
-        fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
-                                random.randrange(0, NUM_HEIGHT_BLOCKS))
-        score = 0
-        text = font.render(f"Score: {score}", True, (255, 255, 255))
+        state = INIT
 
     for loc in snake_pixel_locations[:-2]:
         if loc == snake_pixel_locations[-1]:
-            snake_pixel_locations = [(0, 0)]
-            snake_direction = RIGHT
-            fruit_block_location = (random.randrange(0, NUM_WIDTH_BLOCKS),
-                                    random.randrange(0, NUM_HEIGHT_BLOCKS))
-            score = 0
-            text = font.render(f"Score: {score}", True, (255, 255, 255))
+            state = INIT
+            break
 
     pygame.draw.rect(
         screen, "red", (*fruit_pixel_location, BLOCK_SIZE, BLOCK_SIZE))
