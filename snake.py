@@ -30,16 +30,16 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:
+            if event.key == pygame.K_UP:
                 if snake_direction != DOWN or len(snake_pixel_locations) == 1:
                     snake_direction = UP
-            elif event.key == pygame.K_s:
+            elif event.key == pygame.K_DOWN:
                 if snake_direction != UP or len(snake_pixel_locations) == 1:
                     snake_direction = DOWN
-            elif event.key == pygame.K_a:
+            elif event.key == pygame.K_LEFT:
                 if snake_direction != RIGHT or len(snake_pixel_locations) == 1:
                     snake_direction = LEFT
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_RIGHT:
                 if snake_direction != LEFT or len(snake_pixel_locations) == 1:
                     snake_direction = RIGHT
 
