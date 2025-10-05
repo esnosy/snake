@@ -31,13 +31,17 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
-                snake_direction = UP
+                if snake_direction != DOWN or len(snake_pixel_locations) == 1:
+                    snake_direction = UP
             elif event.key == pygame.K_s:
-                snake_direction = DOWN
+                if snake_direction != UP or len(snake_pixel_locations) == 1:
+                    snake_direction = DOWN
             elif event.key == pygame.K_a:
-                snake_direction = LEFT
+                if snake_direction != RIGHT or len(snake_pixel_locations) == 1:
+                    snake_direction = LEFT
             elif event.key == pygame.K_d:
-                snake_direction = RIGHT
+                if snake_direction != LEFT or len(snake_pixel_locations) == 1:
+                    snake_direction = RIGHT
 
     screen.fill("black")
 
